@@ -23,14 +23,37 @@ OrbitGenerator.prototype.askFor = function askFor() {
   console.log(this.yeoman);
 
   var prompts = [{
+    name: 'name',
+    message: 'Application name',
+  }, {
+    name: 'author',
+    message: 'Application author',
+  }, {
+    name: 'description',
+    message: 'Application description',
+  // }, {
+  //   type: 'list',
+  //   choices: ['Jade', 'Blade', 'none'],
+  //   // choices: ['Jade', 'Blade', 'Dust', 'none'],
+  //   name: 'templates',
+  //   message: 'Client-side templating engine',
+  // }, {
+  //   type: 'list',
+  //   choices: ['Stylus', 'none'],
+  //   // choices: ['Stylus', 'LESS', 'SASS', 'SCSS', 'none'],
+  //   name: 'css',
+  //   message: 'CSS preprocessor',
+  }, {
     type: 'confirm',
-    name: 'someOption',
-    message: 'Would you like to enable this option?',
-    default: true
-  }];
+    name: 'requirejs',
+    message: 'Use RequireJS',
+  }, ];
 
   this.prompt(prompts, function (props) {
-    this.someOption = props.someOption;
+    this.name = props.name;
+    this.author = props.author;
+    this.description = props.description;
+    this.requirejs = props.requirejs;
 
     cb();
   }.bind(this));
