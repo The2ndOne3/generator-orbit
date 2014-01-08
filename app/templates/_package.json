@@ -29,8 +29,7 @@
     "grunt": "*",
     "grunt-contrib-stylus": "*",
     "grunt-contrib-clean": "*",
-    "grunt-contrib-jshint": "*",
-    <% if(requirejs) { %>
+    "grunt-contrib-jshint": "*",<% if(requirejs) { %>
     "grunt-contrib-requirejs": "*",
     <% } %>
     "grunt-mocha-cli": "*",

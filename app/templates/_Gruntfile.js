@@ -8,8 +8,8 @@ module.exports = function (grunt){
       options: {
         jshintrc: '.jshintrc'
       }
-    },
-    <% if(requirejs){ %>
+    },<% if(requirejs){ %>
+
     // Run RequireJS optimisation.
     requirejs: {
       build: {
@@ -68,8 +68,7 @@ module.exports = function (grunt){
   });
 
   // Load tasks.
-  grunt.loadNpmTasks('grunt-contrib-stylus');
-  <% if(requirejs){ %>
+  grunt.loadNpmTasks('grunt-contrib-stylus');<% if(requirejs){ %>
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   <% } %>
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -78,10 +77,8 @@ module.exports = function (grunt){
   grunt.loadNpmTasks('grunt-copy-to');
 
   // Register task aliases.
-  grunt.registerTask('default', ['clean', 'build']);
-  <% if(requirejs){ %>
-  grunt.registerTask('build', ['jshint', 'stylus', 'requirejs', 'copyto']);
-  <% } else { %>
+  grunt.registerTask('default', ['clean', 'build']);<% if(requirejs){ %>
+  grunt.registerTask('build', ['jshint', 'stylus', 'requirejs', 'copyto']);<% } else { %>
   grunt.registerTask('build', ['jshint', 'stylus', 'copyto']);
   <% } %>
   grunt.registerTask('test', ['jshint', 'mochacli']);
