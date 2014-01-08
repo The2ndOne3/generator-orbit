@@ -2,7 +2,7 @@
 
 [Yeoman](http://yeoman.io) generator for Orbit applications.
 
-[![Build Status](https://travis-ci.org/the2ndone3/generator-orbit.png)](https://travis-ci.org/the2ndone3/generator-orbit)
+[![Build Status](https://travis-ci.org/The2ndOne3/generator-orbit.png?branch=master)](https://travis-ci.org/The2ndOne3/generator-orbit)
 [![NPM version](https://badge.fury.io/js/generator-orbit.png)](http://badge.fury.io/js/generator-orbit)
 
 
