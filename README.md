@@ -18,7 +18,7 @@ $ npm install -g yo generator-orbit
 
 ### API
 
-`yo orbit`  
+`yo orbit`, `yo orbit:app`
 Creates a new orbit application.
 
 
