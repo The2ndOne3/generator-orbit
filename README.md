@@ -21,21 +21,6 @@ $ npm install -g yo generator-orbit
 `yo orbit`  
 Creates a new orbit application.
 
-`yo orbit:page myPage`  
-Generates a new controller, model, content bundle, and template named *myPage*.
-
-`yo orbit:controller myController`  
-Generates a new controller named *myController*.
-
-`yo orbit:model myModel`  
-Generates a new model named *myModel*.
-
-`yo orbit:template myTemplate`  
-Generates a new template named *myTemplate*.
-
-`yo orbit:locale myFile myCountry myLang`  
-Generates a new content bundle named *myFile*. Both *myCountry* and *myLang* are optional.
-
 
 ## License
 
