@@ -1,7 +1,9 @@
 'use strict';
-var util = require('util');
-var path = require('path');
-var yeoman = require('yeoman-generator');
+
+var util = require('util')
+  , path = require('path')
+  , yeoman = require('yeoman-generator')
+  , chalk = require('chalk');
 
 
 var OrbitGenerator = module.exports = function OrbitGenerator(args, options, config) {
@@ -19,9 +21,17 @@ util.inherits(OrbitGenerator, yeoman.generators.Base);
 OrbitGenerator.prototype.askFor = function askFor() {
   var cb = this.async();
 
-  // have Yeoman greet the user.
-  console.log(this.yeoman);
+  // Banner.
+  console.log(chalk.blue('     ,\'""`. '));
+  console.log(chalk.blue('    / _  _ \\'));
+  console.log(chalk.blue('    |(@)(@)|  '), chalk.white.bold('Release the Kraken!'));
+  console.log(chalk.blue('    )  __  ('));
+  console.log(chalk.blue('   /,\'))((`.\\ '));
+  console.log(chalk.blue('  (( ((  )) ))'));
+  console.log(chalk.blue('   `\\ `)(\' /\''));
+  console.log('');
 
+  // Prompts.
   var prompts = [{
     name: 'name',
     message: 'Application name',
@@ -43,6 +53,14 @@ OrbitGenerator.prototype.askFor = function askFor() {
   //   // choices: ['Stylus', 'LESS', 'SASS', 'SCSS', 'none'],
   //   name: 'css',
   //   message: 'CSS preprocessor',
+  // }, {
+  //   type: 'confirm',
+  //   name: 'passportjs',
+  //   message: 'Use PassportJS',
+  // }, {
+  //   type: 'confirm',
+  //   name: 'sockets',
+  //   message: 'Use Socket.IO',
   }, {
     type: 'confirm',
     name: 'requirejs',
