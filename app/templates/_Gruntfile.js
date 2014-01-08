@@ -9,7 +9,6 @@ module.exports = function (grunt){
         jshintrc: '.jshintrc'
       }
     },<% if(requirejs){ %>
-
     // Run RequireJS optimisation.
     requirejs: {
       build: {
@@ -21,8 +20,7 @@ module.exports = function (grunt){
           modules: [{name: 'app'}]
         }
       }
-    },
-    <% } %>
+    },<% } %>
     // Run Stylus compilation.
     stylus: {
       build: {
@@ -69,8 +67,7 @@ module.exports = function (grunt){
 
   // Load tasks.
   grunt.loadNpmTasks('grunt-contrib-stylus');<% if(requirejs){ %>
-  grunt.loadNpmTasks('grunt-contrib-requirejs');
-  <% } %>
+  grunt.loadNpmTasks('grunt-contrib-requirejs');<% } %>
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mocha-cli');
@@ -79,7 +76,6 @@ module.exports = function (grunt){
   // Register task aliases.
   grunt.registerTask('default', ['clean', 'build']);<% if(requirejs){ %>
   grunt.registerTask('build', ['jshint', 'stylus', 'requirejs', 'copyto']);<% } else { %>
-  grunt.registerTask('build', ['jshint', 'stylus', 'copyto']);
-  <% } %>
+  grunt.registerTask('build', ['jshint', 'stylus', 'copyto']);<% } %>
   grunt.registerTask('test', ['jshint', 'mochacli']);
 };

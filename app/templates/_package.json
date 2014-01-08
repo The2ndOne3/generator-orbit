@@ -30,8 +30,7 @@
     "grunt-contrib-stylus": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-jshint": "*",<% if(requirejs) { %>
-    "grunt-contrib-requirejs": "*",
-    <% } %>
+    "grunt-contrib-requirejs": "*",<% } %>
     "grunt-mocha-cli": "*",
     "grunt-copy-to": "*"
   },

@@ -5,4 +5,5 @@ node_js:
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-orbit' ]; then cd .. && eval "mv $currentfolder generator-orbit" && cd generator-orbit; fi
-
+notifications:
+  - email: false
