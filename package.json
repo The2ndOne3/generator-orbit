@@ -1,7 +1,7 @@
 {
   "name": "generator-orbit",
   "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "description": "Orbit framework generator.",
   "keywords": [
     "yeoman-generator"
   ],
@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "yeoman-generator": "*",
-    "chalk": "*"
+    "chalk": "*",
+    "figlet": "*"
   },
   "devDependencies": {
     "mocha": "*"

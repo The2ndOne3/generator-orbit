@@ -1,5 +1,42 @@
 {
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {}
+  "name": "<%= _.slugify(name) %>",
+  "author": "<%= author %>",
+  "version": "0.0.1",
+  "description": "<%= description %>",
+  "private": true,
+  "scripts": {
+    "start": "nodemon bin/orbit.js",
+    "postinstall": "bower install",
+    "test": "mocha --reporter spec"
+  },
+  "dependencies": {
+    "express": "*",
+    "express-enrouten": "*",
+    "helmet": "*",
+
+    "blade": "*",
+    "stylus": "*",
+    "nib": "*",
+
+    "bower": "*",
+    "nodemon": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "supertest": "*",
+
+    "grunt": "*",
+    "grunt-contrib-stylus": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-jshint": "*",
+    <% if(requirejs) { %>
+    "grunt-contrib-requirejs": "*",
+    <% } %>
+    "grunt-mocha-cli": "*",
+    "grunt-copy-to": "*"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  }
 }
