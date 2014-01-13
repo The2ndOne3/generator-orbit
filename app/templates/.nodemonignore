@@ -1,5 +1,5 @@
-/.build/*
-/public/*
-/views/*
-/.*
+/.build/**
+/public/**
+/views/**
+/.*/**
 *.md
