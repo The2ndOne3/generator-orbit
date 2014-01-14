@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "yeoman-generator": "*",
+    "update-notifier": "*",
     "chalk": "*",
     "figlet": "*"
   },

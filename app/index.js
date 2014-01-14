@@ -2,7 +2,10 @@
 
 var util = require('util')
   , path = require('path')
+
   , yeoman = require('yeoman-generator')
+  , updateNotifier = require('update-notifier')
+
   , figlet = require('figlet')
   , chalk = require('chalk');
 
@@ -43,7 +46,7 @@ OrbitGenerator.prototype.askFor = function askFor() {
       // Prompts.
       var prompts = [{
         type: 'confirm',
-        name: 'mkdir',
+        name: 'newdir',
         message: 'Make in new directory',
       }, {
         name: 'name',
@@ -81,7 +84,7 @@ OrbitGenerator.prototype.askFor = function askFor() {
       }, ];
 
       this.prompt(prompts, function (props) {
-        this.mkdir = props.mkdir;
+        this.newdir = props.newdir;
         this.name = props.name;
         this.author = props.author;
         this.description = props.description;
@@ -95,22 +98,23 @@ OrbitGenerator.prototype.askFor = function askFor() {
 // Extend Yeoman generator functions.
 OrbitGenerator.prototype.extend = function extend(){
   var app_path = '.';
-  if(this.mkdir){
+  if(this.newdir){
     app_path = this.name;
   }
 
-  var self = this;
+  var old_template = this.template.bind(this)
+    , old_copy = this.copy.bind(this);
   this.template = function(infile, outfile){
     if(outfile === undefined){
-      return self.template(infile, path.join(app_path, infile));
+      return old_template(infile, path.join(app_path, infile));
     }
-    return self.template(infile, path.join(app_path, outfile));
+    return old_template(infile, path.join(app_path, outfile));
   };
   this.copy = function(infile, outfile){
     if(outfile === undefined){
-      return self.copy(infile, path.join(app_path, infile));
+      return old_copy(infile, path.join(app_path, infile));
     }
-    return self.copy(infile, path.join(app_path, outfile));
+    return old_copy(infile, path.join(app_path, outfile));
   };
 };
 
