@@ -13,6 +13,11 @@ var util = require('util')
 var OrbitGenerator = module.exports = function OrbitGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
+  var notifier = updateNotifier();
+  if(notifier.update){
+    notifier.notify();
+  }
+
   this.on('end', function () {
     this.installDependencies({ skipInstall: options['skip-install'] });
   });
