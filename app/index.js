@@ -42,6 +42,10 @@ OrbitGenerator.prototype.askFor = function askFor() {
 
       // Prompts.
       var prompts = [{
+        type: 'confirm',
+        name: 'mkdir',
+        message: 'Make in new directory',
+      }, {
         name: 'name',
         message: 'Application name',
       }, {
@@ -77,6 +81,7 @@ OrbitGenerator.prototype.askFor = function askFor() {
       }, ];
 
       this.prompt(prompts, function (props) {
+        this.mkdir = props.mkdir;
         this.name = props.name;
         this.author = props.author;
         this.description = props.description;
@@ -87,58 +92,82 @@ OrbitGenerator.prototype.askFor = function askFor() {
     }.bind(this));
 };
 
+// Extend Yeoman generator functions.
+OrbitGenerator.prototype.extend = function extend(){
+  var app_path = '.';
+  if(this.mkdir){
+    app_path = this.name;
+  }
+
+  var self = this;
+  this.template = function(infile, outfile){
+    if(outfile === undefined){
+      return self.template(infile, path.join(app_path, infile));
+    }
+    return self.template(infile, path.join(app_path, outfile));
+  };
+  this.copy = function(infile, outfile){
+    if(outfile === undefined){
+      return self.copy(infile, path.join(app_path, infile));
+    }
+    return self.copy(infile, path.join(app_path, outfile));
+  };
+};
+
+// Copy application files.
 OrbitGenerator.prototype.app = function app() {
   this.template('_Gruntfile.js', 'Gruntfile.js');
 
-  this.copy('app.js', 'app.js');
-  this.copy('server.js', 'server.js');
+  this.copy('app.js');
+  this.copy('server.js');
 
-  this.copy('bin/orbit.js', 'bin/orbit.js');
+  this.copy(path.join('bin', 'orbit.js'));
 
-  this.copy('controllers/index.js', 'controllers/index.js');
+  this.copy(path.join('controllers', 'index.js'));
 
-  this.copy('lib/auth.js', 'lib/auth.js');
-  this.copy('lib/sockets.js', 'lib/sockets.js');
+  this.copy(path.join('lib', 'auth.js'));
+  this.copy(path.join('lib', 'sockets.js'));
 
-  this.template('models/_index.js', 'models/index.js');
+  this.template(path.join('models', '_index.js'), path.join('models', 'index.js'));
 
-  this.mkdir('public/components');
+  this.mkdir(path.join('public', 'components'));
 
-  this.copy('public/css/app.styl', 'public/css/app.styl');
+  this.copy(path.join('public', 'css', 'app.styl'));
 
-  this.mkdir('public/images');
+  this.mkdir(path.join('public', 'images'));
 
-  this.copy('public/js/.jshintignore', 'public/js/.jshintignore');
-  this.copy('public/js/.jshintrc', 'public/js/.jshintrc');
+  this.copy(path.join('public', 'js', '.jshintignore'));
+  this.copy(path.join('public', 'js', '.jshintrc'));
   if(this.requirejs){
-    this.copy('public/js/app.js', 'public/js/app.js');
-    this.copy('public/js/config.js', 'public/js/config.js');
+    this.copy(path.join('public', 'js', 'app.js'));
+    this.copy(path.join('public', 'js', 'config.js'));
   }
 
-  this.copy('public/templates/index.blade', 'public/templates/index.blade');
-  this.copy('public/templates/layouts/master.blade', 'public/templates/layouts/master.blade');
+  this.copy(path.join('public', 'templates', 'index.blade'));
+  this.copy(path.join('public', 'templates', 'layouts', 'master.blade'));
 
-  this.copy('test/index.js', 'test/index.js');
+  this.copy(path.join('test', 'index.js'));
 
-  this.copy('views/index.blade', 'views/index.blade');
-  this.copy('views/layouts/master.blade', 'views/layouts/master.blade');
-  this.copy('views/errors/404.blade', 'views/errors/404.blade');
-  this.copy('views/errors/500.blade', 'views/errors/500.blade');
+  this.copy(path.join('views', 'index.blade'));
+  this.copy(path.join('views', 'layouts', 'master.blade'));
+  this.copy(path.join('views', 'errors', '404.blade'));
+  this.copy(path.join('views', 'errors', '500.blade'));
 
-  this.copy('Procfile', 'Procfile');
+  this.copy('Procfile');
 };
 
+// Copy project files.
 OrbitGenerator.prototype.projectfiles = function projectfiles() {
-  this.copy('.bowerrc', '.bowerrc');
-  this.copy('.editorconfig', '.editorconfig');
-  this.copy('.gitignore', '.gitignore');
-  this.copy('.jshintrc', '.jshintrc');
-  this.copy('.nodemonignore', '.nodemonignore');
-  this.copy('.travis.yml', '.travis.yml');
+  this.copy('.bowerrc');
+  this.copy('.editorconfig');
+  this.copy('.gitignore');
+  this.copy('.jshintrc');
+  this.copy('.nodemonignore');
+  this.copy('.travis.yml');
 
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
 
-  this.copy('LICENSE', 'LICENSE');
-  this.copy('README.md', 'README.md');
+  this.copy('LICENSE');
+  this.copy('README.md');
 };
