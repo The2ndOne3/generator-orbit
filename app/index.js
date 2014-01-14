@@ -104,24 +104,25 @@ OrbitGenerator.prototype.askFor = function askFor() {
 
 // Extend Yeoman generator functions.
 OrbitGenerator.prototype.extend = function extend(){
-  var app_path = '.';
   if(this.newdir){
-    app_path = this.name;
+    this.name = this.name || 'orbit-app';
+    this.mkdir(this.name);
+    process.chdir(this.name);
   }
 
   var old_template = this.template.bind(this)
     , old_copy = this.copy.bind(this);
   this.template = function(infile, outfile){
     if(outfile === undefined){
-      return old_template(infile, path.join(app_path, infile));
+      return old_template(infile, infile);
     }
-    return old_template(infile, path.join(app_path, outfile));
+    return old_template(infile, outfile);
   };
   this.copy = function(infile, outfile){
     if(outfile === undefined){
-      return old_copy(infile, path.join(app_path, infile));
+      return old_copy(infile, infile);
     }
-    return old_copy(infile, path.join(app_path, outfile));
+    return old_copy(infile, outfile);
   };
 };
 
