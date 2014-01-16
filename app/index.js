@@ -34,72 +34,72 @@ OrbitGenerator.prototype.askFor = function askFor() {
 
   // Banner.
   figlet('Orbit', function(err, data){
-      var messages = [
-        '      To infinity...!',
-        ' Houston, we have lift-off.',
-        ' Set up web apps in less than 12 parsecs.',
-        ' It\'s not brain surgery.',
-        ' It\'s not rocket science... wait.'
-      ];
-      var message = messages[Math.floor(Math.random() * messages.length)];
+    var messages = [
+      '      To infinity...!',
+      ' Houston, we have lift-off.',
+      ' Set up web apps in less than 12 parsecs.',
+      ' It\'s not brain surgery.',
+      ' It\'s not rocket science... wait.'
+    ];
+    var message = messages[Math.floor(Math.random() * messages.length)];
 
-      if(err){
-        return console.error('Something went wrong.');
-      }
-      console.log(chalk.blue(data));
-      console.log(chalk.white.bold(message));
-      console.log();
+    if(err){
+      return console.error('Something went wrong.');
+    }
+    console.log(chalk.blue(data));
+    console.log(chalk.white.bold(message));
+    console.log();
 
-      // Prompts.
-      var prompts = [{
-        type: 'confirm',
-        name: 'newdir',
-        message: 'Make in new directory',
-      }, {
-        name: 'name',
-        message: 'Application name',
-      }, {
-        name: 'author',
-        message: 'Application author',
-      }, {
-        name: 'description',
-        message: 'Application description',
-      // }, {
-      //   type: 'list',
-      //   choices: ['Jade', 'Blade', 'none'],
-      //   // choices: ['Jade', 'Blade', 'Dust', 'none'],
-      //   name: 'templates',
-      //   message: 'Client-side templating engine',
-      // }, {
-      //   type: 'list',
-      //   choices: ['Stylus', 'none'],
-      //   // choices: ['Stylus', 'LESS', 'SASS', 'SCSS', 'none'],
-      //   name: 'css',
-      //   message: 'CSS preprocessor',
-      // }, {
-      //   type: 'confirm',
-      //   name: 'passportjs',
-      //   message: 'Use PassportJS',
-      // }, {
-      //   type: 'confirm',
-      //   name: 'sockets',
-      //   message: 'Use Socket.IO',
-      }, {
-        type: 'confirm',
-        name: 'requirejs',
-        message: 'Use RequireJS',
-      }, ];
+    // Prompts.
+    var prompts = [{
+      type: 'confirm',
+      name: 'newdir',
+      message: 'Make in new directory',
+    }, {
+      name: 'name',
+      message: 'Application name',
+    }, {
+      name: 'author',
+      message: 'Application author',
+    }, {
+      name: 'description',
+      message: 'Application description',
+    // }, {
+    //   type: 'list',
+    //   choices: ['Jade', 'Blade', 'none'],
+    //   // choices: ['Jade', 'Blade', 'Dust', 'none'],
+    //   name: 'templates',
+    //   message: 'Client-side templating engine',
+    // }, {
+    //   type: 'list',
+    //   choices: ['Stylus', 'none'],
+    //   // choices: ['Stylus', 'LESS', 'SASS', 'SCSS', 'none'],
+    //   name: 'css',
+    //   message: 'CSS preprocessor',
+    // }, {
+    //   type: 'confirm',
+    //   name: 'passportjs',
+    //   message: 'Use PassportJS',
+    // }, {
+    //   type: 'confirm',
+    //   name: 'sockets',
+    //   message: 'Use Socket.IO',
+    }, {
+      type: 'confirm',
+      name: 'requirejs',
+      message: 'Use RequireJS',
+    }, ];
 
-      this.prompt(prompts, function (props) {
-        this.newdir = props.newdir;
-        this.name = props.name;
-        this.author = props.author;
-        this.description = props.description;
-        this.requirejs = props.requirejs;
+    this.prompt(prompts, function (props) {
+      this.newdir = props.newdir;
+      this.name = props.name;
+      this.author = props.author;
+      this.description = props.description;
+      this.requirejs = props.requirejs;
 
-        cb();
-      }.bind(this));
+      cb();
     }.bind(this));
+  }.bind(this));
 };
 
 // Extend Yeoman generator functions.
