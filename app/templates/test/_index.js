@@ -27,7 +27,7 @@ describe('index', function () {
       .get('/')
       .expect(200)
       .expect('Content-Type', /html/)
-      .expect(/.*?Welcome to application-name.*? /)
+      .expect(/.*?Welcome to <%= name %>.*? /)
       .end(function(err, res){
         if (err) {
           return done(err);

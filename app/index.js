@@ -158,7 +158,7 @@ OrbitGenerator.prototype.app = function app() {
   this.copy(path.join('public', 'templates', 'index.blade'));
   this.copy(path.join('public', 'templates', 'layouts', 'master.blade'));
 
-  this.copy(path.join('test', 'index.js'));
+  this.template(path.join('test', '_index.js'), path.join('test', 'index.js'));
 
   this.copy(path.join('views', 'index.blade'));
   this.copy(path.join('views', 'layouts', 'master.blade'));
