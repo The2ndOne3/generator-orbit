@@ -170,12 +170,12 @@ OrbitGenerator.prototype.app = function app() {
 
 // Copy project files.
 OrbitGenerator.prototype.projectfiles = function projectfiles() {
-  this.copy('.bowerrc');
-  this.copy('.editorconfig');
-  this.copy('.gitignore');
-  this.copy('.jshintrc');
-  this.copy('.nodemonignore');
-  this.copy('.travis.yml');
+  this.copy('bowerrc', '.bowerrc');
+  this.copy('editorconfig', '.editorconfig');
+  this.copy('gitignore', '.gitignore');
+  this.copy('jshintrc', '.jshintrc');
+  this.copy('nodemonignore', '.nodemonignore');
+  this.copy('travis.yml', '.travis.yml');
 
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
