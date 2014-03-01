@@ -5,7 +5,12 @@
 [ ] Configuration setup
   [ ] Use `konphyg`
   [ ] Set up in /config
-[ ] View engines/CSS preprocessors
+[ ] View engines
+  [x] Enable Jade support
+  [ ] Enable Blade support
+  [ ] Enable EJS support
+  [ ] Enable Dust support
+[ ] CSS preprocessors
   [x] Enable Stylus support
   [ ] Enable LESS support
   [ ] Enable SASS support

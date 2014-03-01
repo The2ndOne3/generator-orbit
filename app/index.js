@@ -7,8 +7,8 @@ var util = require('util')
   , updateNotifier = require('update-notifier')
 
   , figlet = require('figlet')
-  , chalk = require('chalk');
-
+  , chalk = require('chalk')
+  , moniker = require('moniker');
 
 var OrbitGenerator = module.exports = function OrbitGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
@@ -56,15 +56,15 @@ OrbitGenerator.prototype.askFor = function askFor() {
       name: 'newdir',
       message: 'Make in new directory',
       default: true
-    }, {
-      type: 'confirm',
-      name: 'commented',
-      message: 'First time using Orbit?',
-      default: false
+    // }, {
+    //   type: 'confirm',
+    //   name: 'noob',
+    //   message: 'First time using Orbit?',
+    //   default: false
     }, {
       name: 'name',
       message: 'Application name',
-      default: '', // TODO: integrate with moniker
+      default: moniker.choose(),
     }, {
       name: 'author',
       message: 'Application author',
@@ -73,25 +73,24 @@ OrbitGenerator.prototype.askFor = function askFor() {
       name: 'description',
       message: 'Application description',
       default: 'Does cool things!',
+    }, {
+      type: 'list',
+      choices: ['jade', 'blade', 'ejs', 'dust', 'none'],
+      name: 'server_view',
+      message: 'Server-side templating engine',
+      default: 'jade',
     // }, {
     //   type: 'list',
-    //   choices: ['jade', 'blade', 'ejs', 'dust', 'none']
-    //   name: 'templates',
-    //   message: 'Server-side templating engine',
-    //   default: 'jade',
-    // }, {
-    //   type: 'list',
-    //   choices: ['jade', 'blade', 'ejs', 'dust', 'none']
-    //   name: 'templates',
+    //   choices: ['jade', 'blade', 'ejs', 'dust', 'none'],
+    //   name: 'client_view',
     //   message: 'Client-side templating engine',
     //   default: 'jade',
-    // }, {
-    //   type: 'list',
-    //   choices: ['stylus', 'none'],
-    //   // choices: ['stylus', 'less', 'sass', 'scss', 'none'],
-    //   name: 'css',
-    //   message: 'CSS preprocessor',
-    //   default: 'stylus',
+    }, {
+      type: 'list',
+      choices: ['stylus', 'less', 'sass', 'none'],
+      name: 'css',
+      message: 'CSS preprocessor',
+      default: 'stylus',
     // }, {
     //   type: 'confirm',
     //   name: 'passport',
@@ -139,9 +138,15 @@ OrbitGenerator.prototype.askFor = function askFor() {
 
     this.prompt(prompts, function (props) {
       this.newdir = props.newdir;
+      this.noob = props.noob;
+
       this.name = props.name;
       this.author = props.author;
       this.description = props.description;
+
+      this.server_view = props.server_view;
+      this.css = props.css;
+
       this.requirejs = props.requirejs;
 
       cb();
@@ -159,12 +164,14 @@ OrbitGenerator.prototype.extend = function extend(){
 
   var old_template = this.template.bind(this)
     , old_copy = this.copy.bind(this);
+
   this.template = function(infile, outfile){
     if(outfile === undefined){
-      return old_template(infile, infile);
+      return old_template(infile, path.dirname(infile) + path.sep + path.basename(infile).substr(1));
     }
     return old_template(infile, outfile);
   };
+
   this.copy = function(infile, outfile){
     if(outfile === undefined){
       return old_copy(infile, infile);
@@ -174,49 +181,56 @@ OrbitGenerator.prototype.extend = function extend(){
 };
 
 // Copy application files.
-OrbitGenerator.prototype.app = function app() {
-  this.template('_Gruntfile.js', 'Gruntfile.js');
+OrbitGenerator.prototype.app = function() {
+  this.template('_Gruntfile.js');
 
-  this.copy('app.js');
+  this.template('_app.js');
   this.copy('server.js');
 
   this.copy(path.join('bin', 'orbit.js'));
 
   this.copy(path.join('controllers', 'index.js'));
 
-  this.copy(path.join('lib', 'auth.js'));
-  this.copy(path.join('lib', 'sockets.js'));
+  if (this.noob) {
+    this.copy(path.join('lib', 'auth.js'));
+    this.copy(path.join('lib', 'sockets.js'));
+  } else {
+    this.mkdir('lib');
+  }
 
-  this.template(path.join('models', '_index.js'), path.join('models', 'index.js'));
+  this.template(path.join('models', '_index.js'));
 
   this.mkdir(path.join('public', 'components'));
-
-  this.copy(path.join('public', 'css', 'app.styl'));
-
   this.mkdir(path.join('public', 'images'));
-
   this.copy(path.join('public', 'js', '.jshintignore'));
   this.copy(path.join('public', 'js', '.jshintrc'));
+
   if(this.requirejs){
     this.copy(path.join('public', 'js', 'app.js'));
     this.copy(path.join('public', 'js', 'config.js'));
   }
 
+  this.template(path.join('test', '_index.js'));
+};
+
+// Copy stylesheets.
+OrbitGenerator.prototype.css = function() {
+  this.copy(path.join('public', 'css', 'app.' + this.css.substr(0, 4)));
+};
+
+// Copy views.
+OrbitGenerator.prototype.views = function() {
   this.copy(path.join('public', 'templates', 'index.blade'));
   this.copy(path.join('public', 'templates', 'layouts', 'master.blade'));
-
-  this.template(path.join('test', '_index.js'), path.join('test', 'index.js'));
 
   this.copy(path.join('views', 'index.blade'));
   this.copy(path.join('views', 'layouts', 'master.blade'));
   this.copy(path.join('views', 'errors', '404.blade'));
   this.copy(path.join('views', 'errors', '500.blade'));
-
-  this.copy('Procfile');
 };
 
 // Copy project files.
-OrbitGenerator.prototype.projectfiles = function projectfiles() {
+OrbitGenerator.prototype.project_files = function() {
   this.copy('bowerrc', '.bowerrc');
   this.copy('editorconfig', '.editorconfig');
   this.copy('gitignore', '.gitignore');
@@ -224,8 +238,10 @@ OrbitGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('nodemonignore', '.nodemonignore');
   this.copy('travis.yml', '.travis.yml');
 
-  this.template('_bower.json', 'bower.json');
-  this.template('_package.json', 'package.json');
+  this.copy('Procfile');
+
+  this.template('_bower.json');
+  this.template('_package.json');
 
   this.copy('LICENSE');
   this.copy('README.md');

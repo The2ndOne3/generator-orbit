@@ -14,20 +14,24 @@
     "express-enrouten": "*",
     "helmet": "*",
 
-    "blade": "*",
-    "stylus": "*",
-    "nib": "*",
+    "<%= server_view %>": "*",
+
+    <% if(css == 'stylus') { %>"stylus": "*", "nib": "*",<% }
+       if(css == 'sass') { %>"node-sass": "*", "compass": "*",<% }
+       if(css == 'less') { %>"less-middleware": "*",<% } %>
 
     "bower": "*",
-    "nodemon": "*"
+    "nodemon": "*",
+
+    "q": "*"
   },
   "devDependencies": {
     "mocha": "*",
     "chai": "*",
     "supertest": "*",
 
-    "grunt": "*",
-    "grunt-contrib-stylus": "*",
+    "grunt": "*",<% if(css == 'stylus') { %>
+    "grunt-contrib-stylus": "*",<% } %>
     "grunt-contrib-clean": "*",
     "grunt-contrib-jshint": "*",<% if(requirejs) { %>
     "grunt-contrib-requirejs": "*",<% } %>

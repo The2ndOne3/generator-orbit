@@ -9,16 +9,28 @@ var express = require('express')
   , enrouten = require('express-enrouten')
   , helmet = require('helmet')
 
-  , blade = require('blade')
+  , <%= server_view %> = require('<%= server_view %>')
+
+
+  <% if(css == 'stylus') { %>
   , stylus = require('stylus')
   , nib = require('nib');
+    <% }
+     if(css == 'sass') { %>
+  , sass = require('node-sass')
+  , compass = require('compass');
+    <% }
+     if(css == 'less') { %>
+  , compass = require('less-middleware');
+    <% } %>
+;
 
 // Initialise the Express stack and set the default listening port.
 var app = express();
 app.set('port', process.env.PORT || 3000);
 
 // Configure the view engine and view directory.
-app.set('view engine', 'blade');
+app.set('view engine', '<%= server_view %>');
 app.set('views', path.join(__dirname, 'views'));
 
 // Gzip and deflate responses if run in a production environment.
@@ -39,6 +51,7 @@ app.use(express.urlencoded());
 // Enable support for faux PUT and DELETE requests.
 app.use(express.methodOverride());
 
+<% if(css == 'stylus') { %>
 // Enable Stylus compilation using Nib and compress them.
 // Compile all .styl files within the 'public' directory.
 app.use(stylus.middleware({
@@ -49,7 +62,7 @@ app.use(stylus.middleware({
       .set('compress', true)
       .use(nib());
   }
-}));
+}));<% } %>
 
 // Use Blade's middleware endpoint that serves client-side templates with a client-side renderer.
 // Serve templates located at 'public/templates'.
