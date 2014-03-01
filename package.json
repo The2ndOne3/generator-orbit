@@ -23,8 +23,11 @@
   "dependencies": {
     "yeoman-generator": "*",
     "update-notifier": "*",
+
+    "figlet": "*",
+
     "chalk": "*",
-    "figlet": "*"
+    "moniker": "*"
   },
   "devDependencies": {
     "mocha": "*"
@@ -33,8 +36,7 @@
     "yo": "*"
   },
   "engines": {
-    "node": "*",
-    "npm": "*"
+    "node": ">= 0.10.0"
   },
   "licenses": [
     {
