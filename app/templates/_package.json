@@ -16,9 +16,9 @@
 
     "<%= server_view %>": "*",
 
-    <% if(css == 'stylus') { %>"stylus": "*", "nib": "*",<% }
-       if(css == 'sass') { %>"node-sass": "*", "compass": "*",<% }
-       if(css == 'less') { %>"less-middleware": "*",<% } %>
+    <% if (css == 'stylus') { %>"stylus": "*", "nib": "*",<% }
+       if (css == 'sass') { %>"node-sass": "*", "compass": "*",<% }
+       if (css == 'less') { %>"less-middleware": "*",<% } %>
 
     "bower": "*",
     "nodemon": "*",
@@ -30,11 +30,11 @@
     "chai": "*",
     "supertest": "*",
 
-    "grunt": "*",<% if(css == 'stylus') { %>
-    "grunt-contrib-stylus": "*",<% } %>
+    "grunt": "*",
+    <% if (css == 'stylus') { %>"grunt-contrib-stylus": "*",<% } %>
     "grunt-contrib-clean": "*",
-    "grunt-contrib-jshint": "*",<% if(requirejs) { %>
-    "grunt-contrib-requirejs": "*",<% } %>
+    "grunt-contrib-jshint": "*",
+    <% if (requirejs) { %>"grunt-contrib-requirejs": "*",<% } %>
     "grunt-mocha-cli": "*",
     "grunt-copy-to": "*"
   },

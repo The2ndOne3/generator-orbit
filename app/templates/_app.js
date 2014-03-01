@@ -21,7 +21,7 @@ var express = require('express')
   , compass = require('compass');
     <% }
      if(css == 'less') { %>
-  , compass = require('less-middleware');
+  , less = require('less-middleware');
     <% } %>
 ;
 
@@ -51,7 +51,7 @@ app.use(express.urlencoded());
 // Enable support for faux PUT and DELETE requests.
 app.use(express.methodOverride());
 
-<% if(css == 'stylus') { %>
+<% if (css == 'stylus') { %>
 // Enable Stylus compilation using Nib and compress them.
 // Compile all .styl files within the 'public' directory.
 app.use(stylus.middleware({
@@ -62,7 +62,25 @@ app.use(stylus.middleware({
       .set('compress', true)
       .use(nib());
   }
-}));<% } %>
+}));
+<% } if (css == 'sass') { %>
+// Compile CSS files using SASS.
+app.use(sass.middleware({
+  src: path.join(__dirname, 'public', 'css'),
+  outputStyle: 'compressed'
+}));
+// Compile CSS files using Compass. NOTE THAT THIS NEEDS COMPASS INSTALLED ON THE MACHINE WITH `gem install compass`
+app.use(compass({
+  sass: 'css',
+  css: 'css'
+}));
+<% } if (css == 'less') { %>
+// Compile CSS files using LESS.
+app.use(less({
+  src: path.join(__dirname, 'public', 'css'),
+  compress: true
+}));
+<% } >
 
 // Use Blade's middleware endpoint that serves client-side templates with a client-side renderer.
 // Serve templates located at 'public/templates'.
