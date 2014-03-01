@@ -39,7 +39,7 @@ OrbitGenerator.prototype.askFor = function askFor() {
       ' Houston, we have lift-off.',
       ' Set up web apps in less than 12 parsecs.',
       ' It\'s not brain surgery.',
-      ' It\'s not rocket science... wait.'
+      ' It\'s not rocket science... wait...'
     ];
     var message = messages[Math.floor(Math.random() * messages.length)];
 
@@ -55,40 +55,87 @@ OrbitGenerator.prototype.askFor = function askFor() {
       type: 'confirm',
       name: 'newdir',
       message: 'Make in new directory',
+      default: true
+    }, {
+      type: 'confirm',
+      name: 'commented',
+      message: 'First time using Orbit?',
+      default: false
     }, {
       name: 'name',
       message: 'Application name',
+      default: '', // TODO: integrate with moniker
     }, {
       name: 'author',
       message: 'Application author',
+      default: 'Bill Builder <bill@email.org>',
     }, {
       name: 'description',
       message: 'Application description',
+      default: 'Does cool things!',
     // }, {
     //   type: 'list',
-    //   choices: ['Jade', 'Blade', 'none'],
-    //   // choices: ['Jade', 'Blade', 'Dust', 'none'],
+    //   choices: ['jade', 'blade', 'ejs', 'dust', 'none']
+    //   name: 'templates',
+    //   message: 'Server-side templating engine',
+    //   default: 'jade',
+    // }, {
+    //   type: 'list',
+    //   choices: ['jade', 'blade', 'ejs', 'dust', 'none']
     //   name: 'templates',
     //   message: 'Client-side templating engine',
+    //   default: 'jade',
     // }, {
     //   type: 'list',
-    //   choices: ['Stylus', 'none'],
-    //   // choices: ['Stylus', 'LESS', 'SASS', 'SCSS', 'none'],
+    //   choices: ['stylus', 'none'],
+    //   // choices: ['stylus', 'less', 'sass', 'scss', 'none'],
     //   name: 'css',
     //   message: 'CSS preprocessor',
+    //   default: 'stylus',
     // }, {
     //   type: 'confirm',
-    //   name: 'passportjs',
+    //   name: 'passport',
     //   message: 'Use PassportJS',
+    //   default: false,
     // }, {
-    //   type: 'confirm',
-    //   name: 'sockets',
-    //   message: 'Use Socket.IO',
+    //   type: 'list',
+    //   name: 'database',
+    //   message: 'Database',
+    //   choices: ['mongodb', 'mysql', 'mariadb', 'scss', 'none'],
+    //   default: 'none',
     }, {
       type: 'confirm',
       name: 'requirejs',
       message: 'Use RequireJS',
-    }, ];
+      default: false,
+    // }, {
+    //   type: 'confirm',
+    //   name: 'sockets',
+    //   message: 'Use Socket.IO',
+    //   default: false,
+    // }, {
+    //   type: 'confirm',
+    //   name: 'socketwrap',
+    //   message: 'Use Socket.IO wrapping',
+    //   default: false,
+    // }, {
+    //   type: 'confirm',
+    //   name: 'ssl',
+    //   message: 'Use SSL/TLS',
+    //   default: false,
+    // }, {
+    //   type: 'list',
+    //   choices: ['caterpillar', 'winston', 'none'],
+    //   name: 'logging',
+    //   message: 'Logging engine',
+    //   default: 'caterpillar',
+    // }, {
+    //   type: 'list',
+    //   choices: ['konphyg', 'nconf', 'none'],
+    //   name: 'config',
+    //   message: 'Configuration handler',
+    //   default: 'konphyg'
+    }];
 
     this.prompt(prompts, function (props) {
       this.newdir = props.newdir;
